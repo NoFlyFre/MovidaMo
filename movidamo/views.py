@@ -8,10 +8,6 @@ import datetime
 import locale
 from django.db.models import Q
 
-
-# Imposta la localizzazione italiana
-locale.setlocale(locale.LC_TIME, 'it_IT.UTF-8')  # Imposta la localizzazione italiana
-
 def home(request):
     eventi = Evento.objects.all().order_by('-id')
     has_today_events = Evento.objects.filter(
