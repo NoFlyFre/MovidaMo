@@ -1,0 +1,269 @@
+{% extends "template.html" %}
+{% load static %}
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block css_link %}
+<link rel="stylesheet" type="text/css" href="{% static '/utenti/css/profile_page.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static '/css/home.css' %}" />
+{% endblock %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<main>
+  <div class="cover">
+    <img src="{% static '/cover.jpg' %}" alt="cover" />
+  </div>
+
+  <div class="infos">
+    <div class="profile-image">
+      {% if profile_user.role == 'organizzatore' %}
+        <img src="{{ profile_user.utente_organizzatore.img.url }}" alt="cover" style="border: 2px solid var(--colore_primario);" />
+      {% else %}
+        <img src="{{ profile_user.utente_base.img.url }}" alt="cover" />
+      {% endif %}
+    </div>
+
+    <div class="profile-info">
+      <div class="title">
+        <div class="title-auto">
+          {% if profile_user.role == 'organizzatore' %}
+            <h1>{{ profile_user.utente_organizzatore.nome }}</h1>
+            <img src="{% static 'circle-check-solid.svg' %}" />
+          {% else %}
+            <h1>{{ profile_user.first_name }}</h1>
+          {% endif %}
+        </div>
+        <h3>@{{ profile_user.username }}</h3>
+      </div>
+
+      <div class="others-info">
+        <div class="events">
+          {% if profile_user.role == 'organizzatore' %}
+            <h3>Eventi organizzati</h3>
+          {% else %}
+            <h3>Eventi partecipati</h3>
+          {% endif %}
+          <p>{{ tot_events }}</p>
+        </div>
+      </div>
+
+      {% if user.is_authenticated and user == profile_user %}
+        {% if profile_user.role == 'organizzatore' %}
+          <div class="buttons action-buttons org-btns">
+            <a href="{% url 'edit_profile_organizer' username=user.username %}">
+              <button type="button">Modifica profilo</button>
+            </a>
+            <div class="lower-btn">
+              <div class="buttons add-event">
+                <a href="{% url 'eventi:add_event' %}">
+                  <img src="{% static 'calendar-plus-regular.svg' %}" alt="Add Event" />
+                </a>
+              </div>
+              <div class="buttons logout">
+                <a href="/user/logout">
+                  <img src="{% static 'right-from-bracket-solid.svg' %}" alt="Logout" />
+                </a>
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <div class="buttons action-buttons">
+            <a href="{% url 'edit_profile' username=user.username %}">
+              <button type="button">Modifica profilo</button>
+            </a>
+            <div class="buttons logout">
+              <a href="/user/logout">
+                <img src="{% static 'right-from-bracket-solid.svg' %}" alt="Logout" />
+              </a>
+            </div>
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+
+  {% if user.is_authenticated and user == profile_user and user.role != 'organizzatore' %}
+    <div class="show-option-auto">
+      <p>Eventi futuri privati</p>
+      <div class="tooltip">
+        <img src="{% static 'circle-question-solid.svg' %}" />
+        <span class="tooltiptext">Questa impostazione rende privati gli eventi futuri a cui decidi di partecipare, garantendo la tua privacy.</span>
+      </div>
+      <label class="switch">
+        <input id="private-events-toggle" type="checkbox" {% if user.utente_base.private_future_events %}checked{% endif %} />
+        <span class="slider"></span>
+      </label>
+    </div>
+  {% endif %}
+
+  {% if tot_events != 0 %}
+    {% if eventi_fut|length != 0 %}
+      <div class="events int lock-section">
+        <div class="show-option-auto">
+          <h3>Eventi futuri</h3>
+          {% if profile_user.role != 'organizzatore' %}
+            {% if user.is_authenticated and user.username == profile_user.username %}
+            {% elif user != profile_user and profile_user.utente_base.private_future_events == True %}
+              <div class="tooltip">
+                <img src="{% static 'circle-question-solid.svg' %}" />
+                <span class="tooltiptext">L'utente ha deciso di rendere privati i suoi eventi futuri.</span>
+              </div>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+      
+      {% if profile_user.role != 'organizzatore' %}
+        {% if user != profile_user and profile_user.utente_base.private_future_events == True %}
+          <div class="events_hor_scroller">
+            <div class="card card_general hidden-card">
+              <figure class="card-image">
+                <img id="lock-icon" src="{% static 'eye-slash-solid.svg' %}" />
+                <img class='blurry' src="{% static 'blurry-image-bg.jpg' %}" alt="event_photo" />
+              </figure>
+              <div class="card-header">
+                <div class="left-col">
+                  <h3 class="title blurry-text">Birichino</h3>
+                  <div class="location">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                      <path fill="#D3D3D3" d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z" />
+                    </svg>
+                    <a class="location-name blurry-text">Altrove</a>
+                  </div>
+                </div>
+                <div class="right-col">
+                  <h3 class="price">???</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <div class="events_hor_scroller">
+            {% for event in eventi_fut %}
+            <div class="card card_general">
+              <div class="general-card-img">
+                <div class="day-info">
+                  <p class="day">{{event.get_day}}</p>
+                  <p class="month">{{event.get_month}}</p>
+                </div>
+                <figure class="card-image">
+                  <img src="{{event.get_image_url}}" alt="event_photo" />
+                </figure>
+              </div>
+              <div class="card-header">
+                <div class="left-col">
+                  <h3 class="title">{{event.name}}</h3>
+                  <div class="location">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                      <path fill="#D3D3D3" d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z" />
+                    </svg>
+                    <a class="location-name">{{event.location}}</a>
+                  </div>
+                </div>
+                <div class="right-col">
+                  {% if event.is_free %}
+                  <h3 class="price">Gratis</h3>
+                  {% else %}
+                  <h3 class="price">{{event.format_price}}</h3>
+                  {% endif %}
+                </div>
+                <a href="/eventi/{{event.id}}" class="card-link"></a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="events_hor_scroller">
+          {% for event in eventi_fut %}
+          <div class="card card_general">
+            <div class="general-card-img">
+              <div class="day-info">
+                {% if event.is_today %}
+                  <p class="day">Oggi</p>
+                {% else %}
+                  <p class="day">{{event.get_day}}</p>
+                  <p class="month">{{event.get_month}}</p>
+                {% endif %}
+              </div>
+              <figure class="card-image">
+                <img src="{{event.get_image_url}}" alt="event_photo" />
+              </figure>
+            </div>  
+            <div class="card-header">
+              <div class="left-col">
+                <h3 class="title">{{event.name}}</h3>
+                <div class="location">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                    <path fill="#D3D3D3" d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z" />
+                  </svg>
+                  <a class="location-name">{{event.location}}</a>
+                </div>
+              </div>
+              <div class="right-col">
+                {% if event.is_free %}
+                <h3 class="price">Gratis</h3>
+                {% else %}
+                <h3 class="price">{{event.format_price}}</h3>
+                {% endif %}
+              </div>
+              <a href="/eventi/{{event.id}}" class="card-link"></a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% if eventi_pass|length != 0 %}
+      <div class="events int">
+        <h3>Eventi passati</h3>
+      </div>
+      <div class="events_hor_scroller">
+        {% for event in eventi_pass %}
+        <div class="card card_general">
+          <div class="general-card-img">
+            <div class="day-info">
+              <p class="day">{{event.get_day}}</p>
+              <p class="month">{{event.get_month}}</p>
+            </div>
+            <figure class="card-image">
+              <img src="{{event.get_image_url}}" alt="event_photo" />
+            </figure>
+          </div>
+          <div class="card-header">
+            <div class="left-col">
+              <h3 class="title">{{event.name}}</h3>
+              <div class="location">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                  <path fill="#D3D3D3" d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z" />
+                </svg>
+                <a class="location-name">{{event.location}}</a>
+              </div>
+            </div>
+            <div class="right-col">
+              {% if event.is_free %}
+              <h3 class="price">Gratis</h3>
+              {% else %}
+              <h3 class="price">{{event.format_price}}</h3>
+              {% endif %}
+            </div>
+            <a href="/eventi/{{event.id}}" class="card-link"></a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% else %}
+    <div class="no-events" style="margin-top:150px">
+      Non ci sono eventi da mostrare
+    </div>
+  {% endif %}
+  <script src="{% static 'utenti/js/profile_page.js' %}"></script>
+</main>
+{% endblock %}

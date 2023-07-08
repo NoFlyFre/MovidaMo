@@ -1,0 +1,57 @@
+{% extends "template.html" %} {% load static %} {% block title%} {{title}}
+{%endblock %} {% block css_link %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static '/utenti/css/signup.css' %}"
+/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}" />
+{% endblock %} {% block script %}{% endblock %} {% block content %}
+<main>
+  <div class="container">
+    <img src="{% static 'logo_small.png' %}" alt="logo" />
+    <div class="form-card">
+      <div class="form-title">
+        <h1>Scopri la MOvida!</h1>
+      </div>
+      <div class="form">
+        <form autocomplete="off" method="POST" action="{% url 'signup' %}">
+          {% csrf_token %}
+          <div class="field-wrapper">
+            <label for="username">Username</label>
+            {{ form.username }}
+          </div>
+          <div class="field-wrapper">
+            <label for="email">Email</label>
+            {{ form.email }}
+          </div>
+          <div class="field-wrapper">
+            <label for="password1">Password</label>
+            {{ form.password1 }}
+          </div>
+          <div class="field-wrapper">
+            <label for="password2">Conferma Password</label>
+            {{ form.password2 }}
+          </div>
+          <button type="submit">Registrati</button>
+        </form>
+        {% if form.errors %}
+          <div class="alert alert-danger">
+            {% for field_errors in form.errors.values %}
+              {% for error in field_errors %}
+                <p>&#128680; {{ error }}</p>
+              {% endfor %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      <div class="form-footer">
+        <p>Hai già un account? <a href="{% url 'login' %}">Log In</a></p>
+        <p>Sei un organizzatore?</p>
+        <p><a href="{% url 'signup_organizer' %}">Registrati come organizzatore</a></p>
+      </div>
+    </div>
+  </div>
+  <script src="../static/js/home.js"></script>
+</main>
+{% endblock %}

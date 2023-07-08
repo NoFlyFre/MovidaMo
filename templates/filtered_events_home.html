@@ -1,0 +1,151 @@
+<div id="filtered_data">
+  <div>
+    <h1 class="title_events">Eventi di stasera</h1>
+  </div>
+  {% if has_today_events %}
+  <div class="events_hor_scroller">
+    {% for event in eventi %} {% if event.is_today %}
+    <div class="card card_general">
+      <figure class="card-image">
+        <img src="{{event.get_image_url}}" alt="event_photo" />
+      </figure>
+      <div class="card-header">
+        <div class="left-col">
+          <h3 class="title">{{event.name}}</h3>
+          <div class="location">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="#D3D3D3"
+                d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"
+              />
+            </svg>
+            <a class="location-name">{{event.location}}</a>
+          </div>
+        </div>
+        <div class="right-col">
+          {% if event.is_free %}
+          <h3 class="price">Gratis</h3>
+          {% else %}
+          <h3 class="price">{{event.format_price}}</h3>
+          {% endif %}
+        </div>
+        <a href="eventi/{{event.id}}" class="card-link"></a>
+      </div>
+    </div>
+    {% endif %} {% endfor %}
+  </div>
+  {% else %}
+  <div id="no-events">Oggi non c'è nulla da fare</div>
+  {% endif %}
+  {% if user.is_authenticated and user.role == 'utente_base' and eventi_raccomandati|length != 0 %}
+  <div>
+    <h1 class="title_events">Eventi per te</h1>
+  </div>
+  <div class="events_hor_scroller">
+    {% for event in eventi_raccomandati %}
+    <div class="card card_general">
+      <div class="general-card-img">
+        <div class="day-info">
+          {% if event.is_today %}
+          <p class="day">Oggi</p>
+          {% else %}
+          <p class="day">{{event.get_day}}</p>
+          <p class="month">{{event.get_month}}</p>
+          {% endif %}
+        </div>
+        <figure class="card-image">
+          <img src="{{event.get_image_url}}" alt="event_photo" />
+        </figure>
+      </div>
+      <div class="card-header">
+        <div class="left-col">
+          <h3 class="title">{{event.name}}</h3>
+          <div class="location">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="#D3D3D3"
+                d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"
+              />
+            </svg>
+            <a class="location-name">{{event.location}}</a>
+          </div>
+        </div>
+        <div class="right-col">
+          {% if event.is_free %}
+          <h3 class="price">Gratis</h3>
+          {% else %}
+          <h3 class="price">{{event.format_price}}</h3>
+          {% endif %}
+        </div>
+        <a href="eventi/{{event.id}}" class="card-link"></a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <div class="other_events">
+    <div>
+      <h1 class="title_events">Eventi futuri</h1>
+    </div>
+    <div class="events_ver_scroller">
+      {% if not_today_events|length > 0 %}
+      {% for event in not_today_events%}
+      <div class="small-card card_general">
+        <a href="eventi/{{event.id}}" class="card-link"></a>
+        <div class="card-header">
+          <img
+            src="{{event.get_image_url}}"
+            alt="event_photo"
+            width="60px"
+            class="skeleton"
+          />
+          <div class="card-info">
+            <h3 class="title skeleton">{{event.name}}</h3>
+            <div class="location skeleton">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="#D3D3D3"
+                  d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"
+                />
+              </svg>
+              <a class="location-name">{{event.location}}</a>
+            </div>
+            <div class="date skeleton">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                <path
+                  d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                />
+              </svg>
+              <a class="date-data">{{event.data_evento_formattata}}</a>
+            </div>
+            {% if event.is_free %}
+            <h3 class="price skeleton">Gratis</h3>
+            {% else %}
+            <h3 class="price skeleton">{{event.format_price}}</h3>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <div id="no-events">Non ci sono eventi futuri</div>
+      {% endif %}
+    </div>
+  </div>
+</div>

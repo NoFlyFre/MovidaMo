@@ -1,0 +1,210 @@
+{% extends "template.html" %} {% load static %} {% block title%} {{title}}
+{%endblock %} {% block css_link %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}" />
+{% endblock %} {% block script %}{% endblock %} {% block content %}
+<header>
+  <div>
+    <nav class="nav_bar">
+      <div class="logo_container">
+        <h1>
+          <picture>
+            <img class="logo" src="static/movida.png" alt="MovidaMo" />
+          </picture>
+        </h1>
+      </div>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="scrollable">
+    <nav class="categories-container">
+      <ul class="categories-list">
+        {%comment%}
+        <li class="filter_btn category">
+          <a href="#">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+              width="20"
+              height="20"
+              style="vertical-align: middle"
+            >
+              <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+              <path
+                fill="#FFFFFF"
+                d="M3.9 54.9C10.5 40.9 24.5 32 40 32H472c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9V448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6V320.9L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z"
+              />
+            </svg>
+          </a>
+        </li>
+        {%endcomment%} {% for category in categorie %}
+        <li class="category" data-id="{{category.id}}">
+          <a href="#" class="single-category"><div class="category-list-emoji">{{category.emoji}}</div>{{category.nome}}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </nav>
+    <div id="filtered_data">
+      <div>
+        <h1 class="title_events">Eventi di stasera</h1>
+      </div>
+      {% if has_today_events %}
+      <div class="events_hor_scroller">
+        {% for event in eventi %} {% if event.is_today %}
+        <div class="card card_general">
+          <figure class="card-image">
+            <div class="category-info">
+              <p class="category-emoji">{{event.categoria.emoji}}</p>
+            </div>
+            <img src="{{event.get_image_url}}" alt="event_photo" />
+          </figure>
+          <div class="card-header">
+            <div class="left-col">
+              <h3 class="title">{{event.name}}</h3>
+              <div class="location">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="#D3D3D3"
+                    d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"
+                  />
+                </svg>
+                <a class="location-name">{{event.location}}</a>
+              </div>
+            </div>
+            <div class="right-col">
+              {% if event.is_free %}
+              <h3 class="price">Gratis</h3>
+              {% else %}
+              <h3 class="price">{{event.format_price}}</h3>
+              {% endif %}
+            </div>
+            <a href="eventi/{{event.id}}" class="card-link"></a>
+          </div>
+        </div>
+        {% endif %} {% endfor %}
+      </div>
+      {% else %}
+      <div id="no-events">Oggi non c'è nulla da fare</div>
+      {% endif %}
+      {% if user.is_authenticated and user.role == 'utente_base' and eventi_raccomandati|length != 0 %}
+      <div>
+        <h1 class="title_events">Eventi per te</h1>
+      </div>
+      <div class="events_hor_scroller">
+        {% for event in eventi_raccomandati %}
+        <div class="card card_general">
+          <div class="general-card-img">
+            <div class="category-info">
+              <p class="category-emoji">{{event.categoria.emoji}}</p>
+            </div>
+            <div class="day-info">
+              {% if event.is_today %}
+              <p class="day">Oggi</p>
+              {% else %}
+              <p class="day">{{event.get_day}}</p>
+              <p class="month">{{event.get_month}}</p>
+              {% endif %}
+            </div>
+            <figure class="card-image">
+              <img src="{{event.get_image_url}}" alt="event_photo" />
+            </figure>
+          </div>
+          <div class="card-header">
+            <div class="left-col">
+              <h3 class="title">{{event.name}}</h3>
+              <div class="location">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="#D3D3D3"
+                    d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"
+                  />
+                </svg>
+                <a class="location-name">{{event.location}}</a>
+              </div>
+            </div>
+            <div class="right-col">
+              {% if event.is_free %}
+              <h3 class="price">Gratis</h3>
+              {% else %}
+              <h3 class="price">{{event.format_price}}</h3>
+              {% endif %}
+            </div>
+            <a href="eventi/{{event.id}}" class="card-link"></a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="other_events">
+        <div>
+          <h1 class="title_events">Eventi futuri</h1>
+        </div>
+        <div class="events_ver_scroller">
+          {% if not_today_events|length > 0 %}
+          {% for event in not_today_events%}
+          <div class="small-card card_general">
+            <a href="eventi/{{event.id}}" class="card-link"></a>
+            <div class="card-header">
+              <img
+                src="{{event.get_image_url}}"
+                alt="event_photo"
+                width="60px"
+                class="skeleton"
+              />
+              <div class="card-info">
+                <h3 class="title skeleton">{{event.name}}</h3>
+                <div class="location skeleton">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="#D3D3D3"
+                      d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"
+                    />
+                  </svg>
+                  <a class="location-name">{{event.location}}</a>
+                </div>
+                <div class="date skeleton">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
+                  <a class="date-data">{{event.data_evento_formattata}}</a>
+                </div>
+                {% if event.is_free %}
+                <h3 class="price skeleton">Gratis</h3>
+                {% else %}
+                <div class="price-info-small">
+                  <h3 class="price skeleton">{{event.format_price}}</h3>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          {% else %}
+          <div id="no-events">Non ci sono eventi futuri</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  <script src="../static/js/home.js"></script>
+</main>
+{% endblock %}

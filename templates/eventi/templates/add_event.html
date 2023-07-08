@@ -1,0 +1,105 @@
+{% extends "template.html" %} {% load static %} {% block title%} {{title}}
+{%endblock %} {% block css_link %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static '/utenti/css/profile_page.css' %}"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static '/utenti/css/edit_profile.css' %}"
+/>
+{% endblock %} {% block script %} {% endblock %} {% block content %}
+<main>
+  <div class="cover">
+    <img src="{% static '/cover.jpg' %}" alt="cover" />
+  </div>
+  <div class="infos">
+    {% if user.is_authenticated and user.role == 'organizzatore' %}
+    <div class="profile-image">
+      <img src="{{ user.utente_organizzatore.img.url }}" alt="cover" />
+    </div>
+    {% else %}
+    <div class="profile-image">
+      <img src="{{ user.utente_base.img.url }}" alt="cover" />
+    </div>
+    {% endif %}
+    <div class="profile-info">
+      <div class="title">
+        <h1 id="name-user" name="name-user">{{user.first_name}}</h1>
+        <h3>Aggiungi evento</h3>
+      </div>
+      <form
+        autocomplete="off"
+        method="POST"
+        enctype="multipart/form-data"
+        action="{% url 'eventi:add_event' %}"
+      >
+        {% csrf_token %}
+        <div class="field-wrapper">
+          <label for="name">Nome evento</label>
+          {{ form.name }}
+        </div>
+        <div class="field-wrapper">
+          <label for="location">Nome locale</label>
+          {{ form.location }}
+        </div>
+        <div class="field-wrapper">
+            <label for="address">Indirizzo</label>
+            {{ form.address }}
+        </div>
+        <div class="field-wrapper">
+          <label for="address">CAP</label>
+          {{ form.cap }}
+        </div>
+        <div class="field-wrapper">
+          <label for="categoria">Categoria</label>
+          {{ form.categoria }}
+        </div>
+        <div class="field-wrapper">
+          <label for="data">Data</label>
+          {{ form.data }}
+        </div>
+        <div class="field-wrapper">
+          <label for="time">Orario</label>
+          {{ form.time }}
+        </div>
+        <div class="field-wrapper">
+          <label for="price">Prezzo</label>
+          {{ form.price }}
+        </div>
+        <div class="field-wrapper">
+          <label for="special_guest">Ospite speciale</label>
+          {{ form.special_guest }}
+        </div>
+        <div class="field-wrapper">
+          <label for="description">Descrizione</label>
+          {{ form.description }}
+        </div>
+        <div class="field-wrapper">
+          <label for="tags">Tags</label>
+          {{ form.tags }}
+        </div>
+        <div class="field-wrapper">
+          <label for="image">Immagine</label>
+          <input type="file" name="image" accept="image/*" id="id_image">
+        </div>
+        <div class="field-wrapper">
+          <label for="tickets_link">Link Biglietti</label>
+          {{ form.tickets_link }}
+        </div>
+        <div class="field-wrapper">
+          <label for="info_phone_number"
+            >Numero di telefono per informazioni</label
+          >
+          {{ form.info_phone_number }}
+        </div>
+
+        <button type="submit">Conferma</button>
+      </form>
+    </div>
+  </div>
+  <script src="{% static '/eventi/js/add_event.js' %}"></script>
+</main>
+{% endblock %}

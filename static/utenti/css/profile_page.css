@@ -1,0 +1,517 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500&display=swap");
+
+:root {
+  --colore_primario: #fccd22;
+  --colore_secondario: #1e275c;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+main {
+  margin-bottom: 80px;
+}
+
+.scrollable_page {
+  background-image: url("../../bg.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  font-family: "Oswald", sans-serif;
+  color: #fff;
+  max-width: 100%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ! ========================== COVER ================================== */
+
+.cover {
+  position: relative;
+  height: 25vh;
+  width: 100%;
+}
+
+img {
+  max-width: 100%;
+  height: 100%;
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* ! ========================== IMAGE PROFILE ================================== */
+
+.infos {
+  position: relative;
+  margin-top: -130px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.profile-image {
+  width: 100px;
+  height: 100px;
+  z-index: 200;
+}
+
+.profile-image img {
+  border-radius: 50%;
+  border: 2px solid var(--colore_secondario);
+  box-shadow: 0px 2.8px 2.2px rgba(0, 0, 0, 0.028),
+    0px 6.7px 5.3px rgba(0, 0, 0, 0.04), 0px 12.5px 10px rgba(0, 0, 0, 0.05),
+    0px 22.3px 17.9px rgba(0, 0, 0, 0.06),
+    0px 41.8px 33.4px rgba(0, 0, 0, 0.072), 0px 100px 80px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info {
+  margin-top: -50px;
+  text-align: center;
+  background-color: rgba(30, 39, 92);
+  border-radius: 20px;
+  height: 100%;
+  width: 80%;
+  box-shadow: 0px 0px 2.2px rgba(0, 0, 0, 0.127),
+    0px 0px 5.3px rgba(0, 0, 0, 0.182), 0px 0px 10px rgba(0, 0, 0, 0.225),
+    0px 0px 17.9px rgba(0, 0, 0, 0.268), 0px 0px 33.4px rgba(0, 0, 0, 0.323),
+    0px 0px 80px rgba(0, 0, 0, 0.45);
+}
+
+.profile-info .title {
+  margin-top: 60px;
+}
+
+.profile-info .title h1 {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.profile-info .title h3 {
+  font-size: 1.3rem;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+.others-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 20px 0px;
+  justify-content: space-evenly;
+}
+
+.events h3 {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.others-info p {
+  font-size: 1.3rem;
+  font-weight: 300;
+  margin-top: 9px;
+}
+
+.int {
+  margin: 0px 15px;
+}
+
+/* ! ========================== FOOTER ================================== */
+
+.bottom-navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 70px;
+  background-color: rgba(30, 39, 92, 0.5);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: 20px 20px 0px 0px;
+  box-shadow: 0px -1.7px 2.2px rgba(0, 0, 0, 0.034),
+    0px -4.1px 5.3px rgba(0, 0, 0, 0.048), 0px -7.6px 10px rgba(0, 0, 0, 0.06),
+    0px -13.6px 17.9px rgba(0, 0, 0, 0.072),
+    0px -25.5px 33.4px rgba(0, 0, 0, 0.086), 0px -61px 80px rgba(0, 0, 0, 0.12);
+  z-index: 999999;
+}
+
+.bottom-navbar a {
+  text-decoration: none;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bottom-navbar svg,
+.bottom-navbar img {
+  height: 37px;
+  width: 37px;
+  fill: #fff;
+}
+
+.bottom-navbar img {
+  position: relative;
+  display: block;
+  object-fit: cover;
+  object-position: 20% 10%; /* try 20px 10px */
+  border: 2px solid var(--colore_primario);
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}
+
+/* ! ========================== FORM ================================== */
+
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.field-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+form * :not(label, img) {
+  min-width: 80%;
+  width: 240px;
+  font-family: Verdana;
+  height: 40px;
+  padding: 5px 15px;
+  margin: 5px 0px;
+  font-size: 15px;
+  font-weight: 300;
+  color: #a4a4a4;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid #ffffff;
+  backdrop-filter: blur(6.07811px);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+#image-preview {
+  height: auto;
+}
+
+form #id_description {
+  height: 150px;
+}
+
+form input:focus {
+  outline: none;
+  border: 1px solid var(--colore_primario);
+  color: var(--colore_primario);
+}
+
+
+form input:valid, form textarea:valid, form select:valid {
+  border-color: var(--colore_primario);
+  color: var(--colore_primario);
+}
+
+form input:valid::placeholder, form textarea:valid::placeholder, form select:valid::placeholder {
+  color: var(--colore_primario);
+}
+
+/* ! ========================== BUTTONS ================================== */
+
+
+button {
+  font-family: "Oswald", sans-serif;
+  width: 80%;
+  padding: 5px 20px;
+  margin: 30px 0px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--colore_secondario);
+  background: var(--colore_primario);
+  border: 0px;
+  backdrop-filter: blur(6.07811px);
+  border-radius: 13px;
+  transition: all 0.3s ease;
+}
+
+.buttons button {
+  margin: 0px;
+  font-weight: 400;
+  font-size: 24px;
+  width: 100%;
+}
+
+.action-buttons-org {
+  position: relative;
+  align-content: center;
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 22px;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.org-btns {
+  position: relative;
+  align-content: center;
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 22px;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.action-buttons {
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  align-content: center;
+  margin-bottom: 22px;
+}
+
+
+.action-buttons .button {
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: var(--colore_primario);
+  color: var(--colore_secondario);
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.action-buttons img {
+  height: 24px;
+  width: 24px;
+}
+
+.logout, .add-event {
+  width: auto;
+  height: 45px;
+  padding: 5px 20px;
+  background: var(--colore_primario);
+  border: 0px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+}
+
+.title-auto {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  align-items: baseline;
+}
+
+.title-auto img {
+  height: 24px;
+  width: 24px;
+  margin-left: 10px;
+  filter: invert(72%) sepia(100%) saturate(394%) hue-rotate(352deg) brightness(101%) contrast(98%);
+}
+
+.lower-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 15px;
+}
+
+/* ! ========================== TOGGLE ================================== */
+
+/* The switch - the box around the slider */
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 3.5em;
+  height: 2em;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  border: 1px solid #adb5bd;
+  transition: .4s;
+  border-radius: 30px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1.4em;
+  width: 1.4em;
+  border-radius: 20px;
+  left: 0.27em;
+  bottom: 0.25em;
+  background-color: #adb5bd;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: var(--colore_secondario);
+  border: 1px solid var(--colore_secondario);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--colore_secondario);
+}
+
+input:checked + .slider:before {
+  transform: translateX(1.4em);
+  background-color: #fff;
+}
+
+.show-option-auto {
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+  align-items: baseline;
+}
+
+.show-option-auto img {
+  height: 20px;
+  width: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  filter: invert(100%);
+}
+
+.show-option-auto p {
+  font-size: 1.3rem;
+  font-weight: 300;
+  margin-left: 15px;
+}
+
+/* ! ========================== TOOLTIP ================================== */
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    bottom: 152%;
+    left: -20px;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1001;
+    padding: 15px 15px;
+    background-color: rgba(30, 39, 92, 0.5);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(20px);
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgba(30, 39, 92, 0.5) transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* ! ========================== PRIVATE ================================== */
+
+.lock-section {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  margin-top: 20px;
+  justify-content: flex-start;
+}
+
+#lock-icon {
+  width: auto;
+  filter: invert(100%);
+  position: relative;
+  top: 50%;
+  left: 50%;
+  margin: -25px;
+  height: 50px;
+  z-index: 1;
+}
+
+.private-events-message {
+  font-size: 1rem;
+  font-weight: 300;
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.private-events-message p {
+  width: 200px;
+  text-align: center;
+}
+
+/* ! ========================== BLUR IMAGE ================================== */
+
+.blurry {
+  filter: blur(40px);
+  -webkit-filter: blur(40px);
+}
+
+.blurry-text {
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+}
+
+/* ! ========================== TEXT NO EVENTS ================================== */
+
+.no-events {
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: #d3d3d3;
+  text-align: center;
+  margin: 2rem 2rem;
+}
