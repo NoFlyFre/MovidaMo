@@ -1,12 +1,7 @@
 from django.db import models
 import datetime
-import locale
 
 from utenti.models import Organizzatore
-
-# Imposta la localizzazione italiana
-locale.setlocale(locale.LC_TIME, 'it_IT')
-
 
 class Categoria(models.Model):
     nome = models.CharField(max_length=100)
