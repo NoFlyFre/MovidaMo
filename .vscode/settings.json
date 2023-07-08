@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/a0279175-b9d5-4095-adfe-9da32df8cff9/resourceGroups/MovidaMO/providers/Microsoft.Web/sites/MovidaMO",
+    "appService.deploySubpath": "."
+}
