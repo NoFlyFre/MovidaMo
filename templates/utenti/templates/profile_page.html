@@ -16,7 +16,11 @@
 {% block content %}
 <main>
   <div class="cover">
-    <img src="{% static '/cover.jpg' %}" alt="cover" />
+    {% if profile_user.utente_base.cover_img %}
+    <img src="{{ profile_user.utente_base.cover_img.url }}" alt="cover" />
+    {% else %}
+    <img src={% static "cover.jpg" %}></img>
+    {% endif %}
   </div>
 
   <div class="infos">
@@ -44,13 +48,22 @@
       <div class="others-info">
         <div class="events">
           {% if profile_user.role == 'organizzatore' %}
-            <h3>Eventi organizzati</h3>
+            <h3>Eventi</h3>
           {% else %}
-            <h3>Eventi partecipati</h3>
+            <h3>Eventi</h3>
           {% endif %}
           <p>{{ tot_events }}</p>
         </div>
+        <div class="events">
+          {% if profile_user.role == 'organizzatore' %}
+            <h3>Followers</h3>
+          {% else %}
+            <h3>Amici</h3>
+          {% endif %}
+          <p>{{ friends_number }}</p>
+        </div>
       </div>
+      
 
       {% if user.is_authenticated and user == profile_user %}
         {% if profile_user.role == 'organizzatore' %}
@@ -85,7 +98,33 @@
         {% endif %}
       {% endif %}
     </div>
+    {% if user.is_authenticated and user != profile_user %}
+      {% if friend_request_status == 0 %}
+      <div class="friend_request">
+        <button type="button" id="friend_request_btn">
+          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM504 312V248H440c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V136c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H552v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+          Aggiungi agli amici
+        </button>
+      </div>
+      {% elif friend_request_status == 1 %}
+      <div class="friend_request">
+        <button type="button" id="friend_request_btn">
+          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M224 0a128 128 0 1 1 0 256A128 128 0 1 1 224 0zM178.3 304h91.4c20.6 0 40.4 3.5 58.8 9.9C323 331 320 349.1 320 368c0 59.5 29.5 112.1 74.8 144H29.7C13.3 512 0 498.7 0 482.3C0 383.8 79.8 304 178.3 304zM352 368a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-80c-8.8 0-16 7.2-16 16v64c0 8.8 7.2 16 16 16h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H512V304c0-8.8-7.2-16-16-16z"/></svg>
+          Richiesta inviata
+        </button>
+      </div>
+      {% elif friend_request_status == 2 %}
+      <div class="friend_request">
+        <button type="button" id="friend_request_btn">
+          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM625 177L497 305c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L591 143c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
+          Amici
+        </button>
+      </div>
+      {% endif %}
+    {% endif %}
   </div>
+  
+
 
   {% if user.is_authenticated and user == profile_user and user.role != 'organizzatore' %}
     <div class="show-option-auto">
@@ -264,6 +303,9 @@
       Non ci sono eventi da mostrare
     </div>
   {% endif %}
+  <script>
+    var profileUsername = "{{ profile_user.username }}";
+  </script>
   <script src="{% static 'utenti/js/profile_page.js' %}"></script>
 </main>
 {% endblock %}

@@ -1,21 +1,33 @@
 :root {
-    --colore_primario: #fccd22;
-    --colore_secondario: #1e275c;
+  --colore_primario: #fccd22;
+  --colore_secondario: #1e275c;
 }
 
 .edit-icon {
-    background-color: white;
-    height: 24px;
-    width: 24px;
-    border-radius: 50%;
-    position: relative;
-    top: 94px;
-    right: -70px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  background-color: white;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  position: relative;
+  top: 94px;
+  right: -70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-#id_profile_picture {
-    display: none;
+#id_profile_picture, #id_cover_picture {
+  display: none;
+}
+
+.edit_infos {
+  margin-top: 10px;
+}
+
+#edit_cover {
+  border-radius: 0px 0px 20px 20px;
+  box-shadow: 0px 2.8px 2.2px rgba(0, 0, 0, 0.02),
+    0px 6.7px 5.3px rgba(0, 0, 0, 0.028), 0px 12.5px 10px rgba(0, 0, 0, 0.035),
+    0px 22.3px 17.9px rgba(0, 0, 0, 0.042),
+    0px 41.8px 33.4px rgba(0, 0, 0, 0.05), 0px 100px 80px rgba(0, 0, 0, 0.07);
 }

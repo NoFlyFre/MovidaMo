@@ -17,6 +17,10 @@
 </header>
 <main>
   <div class="scrollable">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Cerca" autocomplete="off">
+    </div>
+    <div id="resultsContainer" class="skeleton"></div>
     <nav class="categories-container">
       <ul class="categories-list">
         {%comment%}
@@ -47,7 +51,7 @@
     <div id="filtered_data">
       <div>
         <h1 class="title_events">Eventi di stasera</h1>
-      </div>
+    </div>
       {% if has_today_events %}
       <div class="events_hor_scroller">
         {% for event in eventi %} {% if event.is_today %}
@@ -159,11 +163,11 @@
                 src="{{event.get_image_url}}"
                 alt="event_photo"
                 width="60px"
-                class="skeleton"
+                class=""
               />
               <div class="card-info">
-                <h3 class="title skeleton">{{event.name}}</h3>
-                <div class="location skeleton">
+                <h3 class="title ">{{event.name}}</h3>
+                <div class="location ">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"
@@ -177,7 +181,7 @@
                   </svg>
                   <a class="location-name">{{event.location}}</a>
                 </div>
-                <div class="date skeleton">
+                <div class="date ">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                     <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                     <path
@@ -187,10 +191,10 @@
                   <a class="date-data">{{event.data_evento_formattata}}</a>
                 </div>
                 {% if event.is_free %}
-                <h3 class="price skeleton">Gratis</h3>
+                <h3 class="price ">Gratis</h3>
                 {% else %}
                 <div class="price-info-small">
-                  <h3 class="price skeleton">{{event.format_price}}</h3>
+                  <h3 class="price ">{{event.format_price}}</h3>
                 </div>
                 {% endif %}
               </div>
@@ -203,8 +207,7 @@
         </div>
       </div>
     </div>
-    
   </div>
-  <script src="../static/js/home.js"></script>
+  <script src={% static 'js/home.js' %}></script>
 </main>
 {% endblock %}

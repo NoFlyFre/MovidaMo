@@ -5,8 +5,8 @@ from eventi.models import *
 from raccomandazioni.models import Click
 from utenti.models import *
 import datetime
-import locale
 from django.db.models import Q
+from django.http import JsonResponse
 
 def home(request):
     eventi = Evento.objects.all().order_by('-id')
@@ -117,4 +117,62 @@ def get_recommended_events(user):
     recommended_events = [event for event, _ in grouped_events]
         
     return recommended_events
+
+def search(request):
+    query = request.GET.get('q', '')
+    if len(query) < 3:
+        return JsonResponse([], safe=False)
+
+    # Utilizza Q objects per effettuare una ricerca più complessa
+    
+    events_queryset = Evento.objects.filter(
+        Q(name__icontains=query) |  # Ricerca nel nome dell'evento
+        Q(organizzatore__nome__icontains=query)  # Ricerca nel nome dell'organizzatore associato all'evento
+    )
+
+    events = [{
+        'name': event.name,
+        'location': event.location,
+        'data': event.data.strftime('%d/%m/%Y'),
+        'image': event.image.url if event.image else None,
+        'id': event.id
+    } for event in events_queryset]
+    
+    print(events)
+
+
+    organizers = list(Organizzatore.objects.filter(
+        Q(nome__icontains=query) |  # Ricerca nel nome dell'organizzatore
+        Q(utente__username__icontains=query)  # Ricerca nel nome utente dell'organizzatore (se necessario)
+    ).values(
+        'nome', 'img', 'utente__username'
+    ))
+        
+    users = list(UtenteBase.objects.filter(
+        Q(nome__icontains=query) |  # Ricerca nel nome utente
+        Q(utente__username__icontains=query)  # Ricerca nel nome utente dell'organizzatore (se necessario)
+    ).values(
+        'utente__username', 'img',
+    ))
+    
+    
+    # Combina i risultati o strutturali come preferisci
+    results = {
+        'events': events,
+        'organizers': organizers,
+        'users': users,
+    }
+    
+    return JsonResponse(results, safe=False)
+
+def check_notifications(request):
+    user = request.user
+    unread_count = Notifica.objects.filter(user=user, letta=False).count()
+    return JsonResponse({'unread_count': unread_count})
+
+def mark_notifications_ad_read(request):
+    user = request.user
+    Notifica.objects.filter(user=user, letta=False).update(letta=True)
+    return JsonResponse({'status': 'success'})
+
 

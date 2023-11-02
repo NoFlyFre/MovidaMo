@@ -51,6 +51,7 @@ class UtenteBase(models.Model):
     cover_img = models.ImageField(upload_to='utenti/', blank=True, null=True)
     eventi_part = models.ManyToManyField('eventi.Evento', blank=True)
     private_future_events = models.BooleanField(default=False)
+    amici = models.ManyToManyField('self', blank=True, symmetrical=True)
     
     def __str__(self):
         return self.utente.username
@@ -58,5 +59,31 @@ class UtenteBase(models.Model):
     class Meta:
         verbose_name_plural = "Utenti Base"
         
+    
+        
         
 
+
+class Notifica(models.Model):
+    # Tipi di notifiche
+    RICHIESTA_AMICIZIA = 'RA'
+    AGGIORNAMENTO_EVENTO = 'AE'
+    TIPI_NOTIFICA = [
+        (RICHIESTA_AMICIZIA, 'Richiesta di Amicizia'),
+        (AGGIORNAMENTO_EVENTO, 'Aggiornamento Evento')
+    ]
+    
+    user = models.ForeignKey(Utente, on_delete=models.CASCADE, related_name='notifiche')
+    tipo = models.CharField(max_length=2, choices=TIPI_NOTIFICA, default=RICHIESTA_AMICIZIA)
+    testo = models.TextField()
+    data_creazione = models.DateTimeField(auto_now_add=True)
+    letta = models.BooleanField(default=False)
+    
+    # Riferimento all'utente che ha inviato la richiesta di amicizia, solo per notifiche di tipo RICHIESTA_AMICIZIA
+    mittente = models.ForeignKey(Utente, on_delete=models.SET_NULL, null=True, related_name='notifiche_inviate')
+    
+    def __str__(self):
+        return f"Notifica per {self.user.username} - {self.testo[:30]}..."
+
+    class Meta:
+        ordering = ['-data_creazione']

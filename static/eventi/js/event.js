@@ -41,15 +41,35 @@ $(document).ready(function () {
 
 function goBack() {
     let previousUrl = document.referrer;
-  
-    while (previousUrl.includes("/evento/")) {
-      history.pushState(null, null, previousUrl);
-      previousUrl = document.referrer;
-      console.log(previousUrl);
-    }
-  
-    history.back();
-  }
-  
 
+    while (previousUrl.includes("/evento/")) {
+        history.pushState(null, null, previousUrl);
+        previousUrl = document.referrer;
+        console.log(previousUrl);
+    }
+
+    history.back();
+}
+
+
+$(document).ready(function() {
+    $(".partecipants").click(function() {
+        $("#friends-list").css('transform', 'translateY(0%)'); // Mostra la lista degli amici
+    });
+
+    // Attiva l'evento swipe verso il basso sulla div della lista degli amici
+    $("#friends-list").swipe({
+        swipeDown: function(event, direction, distance, duration, fingerCount) {
+            $("#friends-list").css('transform', 'translateY(100%)'); // Nasconde la lista degli amici
+        },
+        threshold: 50 // Distanza minima (in pixel) che l'utente deve trascinare prima che l'evento swipe venga attivato
+    });
+
+    // (Opzionale) Per nascondere di nuovo la lista quando si clicca al di fuori
+    $(document).click(function(event) {
+        if (!$(event.target).closest("#friends-list, .partecipants").length) {
+            $("#friends-list").css('transform', 'translateY(100%)');
+        }
+    });
+});
 

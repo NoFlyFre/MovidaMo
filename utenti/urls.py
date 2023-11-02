@@ -12,4 +12,10 @@ urlpatterns = [
     path('profile/organizer/<str:username>/edit', edit_profile_organizer, name='edit_profile_organizer'),
     path('partecipa/<int:evento_id>/', partecipa_evento, name='partecipa_evento'),
     path('profile/update_private_events/', update_private_events, name='update_private_events'),
+    path('notifications/', notifications, name='notifications'),
+    path('notifications/accept_friend_request', accetta_richiesta_amicizia, name='accetta_richiesta_amicizia'),
+    path('check_notifications/', check_notifications, name='check_notifications'),
+    path('unread_count/', get_unread_notifications_count, name="unread_notifications_count"),
+    path('mark_notifications_as_read/', mark_notifications_ad_read, name="mark_notifications_as_read"),
+    path('send_friend_request/<str:username>/', send_friend_request, name='send_friend_request'),
 ]

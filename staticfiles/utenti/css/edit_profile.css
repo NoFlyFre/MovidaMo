@@ -1,0 +1,21 @@
+:root {
+    --colore_primario: #fccd22;
+    --colore_secondario: #1e275c;
+}
+
+.edit-icon {
+    background-color: white;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    position: relative;
+    top: 94px;
+    right: -70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#id_profile_picture {
+    display: none;
+}

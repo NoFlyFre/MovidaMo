@@ -1,3 +1,5 @@
 from django.contrib import admin
+from raccomandazioni.models import Click
 
-# Register your models here.
+
+admin.site.register(Click)

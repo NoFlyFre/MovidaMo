@@ -25,6 +25,33 @@ $(document).ready(function() {
     });
 });
 
+$(document).ready(function() {
+    // ... Il resto del tuo codice JS ...
+
+    // Quando l'elemento per cambiare la copertina viene cliccato
+    $('.change_cover_btn').on('click', function() {
+        // Simula il click sull'input nascosto per l'upload dell'immagine della copertina
+        $('#id_cover_picture').click();
+    });
+
+    // Quando viene selezionato un file tramite l'input nascosto per la copertina
+    $('#id_cover_picture').on('change', function() {
+        var input = this;
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                // Aggiorna l'immagine della copertina con il file selezionato
+                $('.cover img').attr('src', e.target.result);
+                // Puoi utilizzare un metodo simile a quello usato per l'immagine del profilo
+                // per inviare la richiesta al server e aggiornare il database.
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    });
+});
+
+
+
 
 // Ottieni il nome utente corrente dal tuo contesto
 var nomeUtente = document.getElementById("name-user").textContent;

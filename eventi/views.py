@@ -1,3 +1,5 @@
+import os
+from django.conf import settings
 from django.shortcuts import render
 from django.shortcuts import render
 from datetime import datetime
@@ -27,10 +29,30 @@ def event_details(request, evento_id):
     
     if request.user.is_authenticated and request.user.role == 'utente_base':
         Click.objects.create(user=request.user, event=evento, organizzatore=evento.get_organizzatore())
+        # Recupera tutti gli amici dell'utente loggato
+        user_friends = request.user.utente_base.amici.all()
+        # Filtra gli amici che partecipano all'evento
+        participating_friends = user_friends.filter(eventi_part=evento).exclude(pk=request.user.utente_base.pk)
 
-    context = {'evento': evento, 'lat': lat, 'long': long,
-               'n_partecipanti': participating_users_number, 'showed_users': showed_users, 'n_parziale_partecipanti': partial_partecipanti_number}
-
+        context = {
+        'evento': evento, 
+        'lat': lat, 
+        'long': long,
+        'n_partecipanti': participating_users_number, 
+        'showed_users': showed_users, 
+        'n_parziale_partecipanti': partial_partecipanti_number,
+        'participating_friends': participating_friends
+        }
+    else:
+        context = {
+            'evento': evento, 
+            'lat': lat, 
+            'long': long,
+            'n_partecipanti': participating_users_number, 
+            'showed_users': showed_users, 
+            'n_parziale_partecipanti': partial_partecipanti_number,
+        }
+    
     return render(request, '../templates/eventi/templates/dettagli_evento.html', context)
 
 
@@ -81,7 +103,6 @@ def filter_events(request):
 
 
 @user_passes_test(lambda u: u.is_authenticated and u.role == 'organizzatore', login_url='/')
-@login_required
 def add_event(request):
     if request.method == 'POST':
         form = AddEventForm(request.POST, request.FILES)
@@ -116,7 +137,12 @@ def add_event(request):
                             # Imposta le coordinate nel modello Evento
                             evento.mappa_lat = latitude
                             evento.mappa_long = longitude
-
+                            
+                    if form.cleaned_data['image'] is None:
+                        image_path = os.path.join(settings.STATIC_ROOT, 'default_event.png')
+                        with open(image_path, 'rb') as default_image:
+                            evento.image.save('default_event.png', default_image, save=False)                
+                
                 evento.save()
                 request.user.utente_organizzatore.eventi.add(evento)
 

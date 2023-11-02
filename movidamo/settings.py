@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
 import os
 from pathlib import Path
 
@@ -24,10 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-t88$g&ymtn5#6kc-o*kqkqzol($bl2u8@b--5iu+adc2kv^p^7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['movidamo.azurewebsites.net']
-
+ALLOWED_HOSTS = ['movidamo.azurewebsites.net','127.0.0.1','192.168.1.156', '*']
 
 
 # Application definition
@@ -38,7 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary',
     "sslserver",
     'eventi',
     'utenti',
@@ -47,9 +47,16 @@ INSTALLED_APPS = [
     'raccomandazioni',
     'django_extensions',
 ]
+'''
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dbmih3try',
+    'API_KEY': '284896676717458',
+    'API_SECRET': 'q0C_5olnrIJMLjVk6MXB2oKkO58',
+}'''
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -114,10 +121,10 @@ AUTH_USER_MODEL = 'utenti.Utente'
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'it-it'
+LANGUAGE_CODE = 'it-IT'
 
 TIME_ZONE = 'Europe/Rome'
-
+USE_L10N = True
 USE_I18N = True
 
 USE_TZ = True
@@ -127,18 +134,25 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static/"),
 )
 
-STATICFILES_STORAGE = 'white_noise.storage.CompressedManifestStaticFilesStorage'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Media settings
+#DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-MEDIA_URL = '/media/'
+# CSRF Security
+CSRF_COOKIE_SECURE = True
+CSRF_TRUSTED_ORIGINS = ['https://movidamo.azurewebsites.net']

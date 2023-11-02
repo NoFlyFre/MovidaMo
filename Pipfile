@@ -12,6 +12,9 @@ pydotplus = "==2.0.2"
 graphviz = "*"
 pyparsing = "*"
 pydot = "*"
+whitenoise = "*"
+cloudinary = "*"
+django-cloudinary-storage = "*"
 
 [dev-packages]
 

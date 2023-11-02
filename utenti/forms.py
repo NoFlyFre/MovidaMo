@@ -19,6 +19,7 @@ class UtenteSignUpForm(UserCreationForm):
             user.save()
         utente = UtenteBase.objects.create(utente=user)
         utente.img = "../static/default_profile.png"
+        utente.cover_img = "../static/cover.png"
         utente.save()
         return user
 
@@ -30,10 +31,11 @@ class UtenteLoginForm(AuthenticationForm):
 class UserProfileEditForm(UserChangeForm):
     first_name = forms.CharField(label='Nome', max_length=100)
     profile_picture = forms.ImageField(label='Immagine del profilo', required=False)
+    cover_picture = forms.ImageField(label="Immagine di copertina", required=False)
 
     class Meta:
         model = UtenteBase
-        fields = ('first_name', 'profile_picture')
+        fields = ('first_name', 'profile_picture','cover_picture')
     
 class OrganizzatoreSignUpForm(UserCreationForm):
     

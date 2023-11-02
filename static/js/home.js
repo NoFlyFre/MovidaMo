@@ -68,3 +68,151 @@ $(document).ready(function () {
   });
 });
 
+
+const searchInput = document.getElementById('searchInput');
+const scrollablePage = document.querySelector('.scrollable_page');
+let clickedInsideResults = false;
+
+function handleFocus() {
+  scrollablePage.classList.add('focused');
+  searchInput.classList.add('focused');
+  console.log('focused');
+}
+
+function handleBlur() {
+  scrollablePage.classList.remove('focused');
+  searchInput.classList.remove('focused');
+  console.log('not focused');
+}
+
+searchInput.addEventListener('touchstart', function (event) {
+  event.stopPropagation(); // Fermiamo la propagazione dell'evento ma non preveniamo il comportamento predefinito
+  handleFocus();
+});
+
+const resultsContainer = document.getElementById('resultsContainer');
+const mainChildren = document.querySelectorAll('.scrollable_page main .scrollable > *:not(.search-bar):not(#resultsContainer)');
+
+resultsContainer.addEventListener('mousedown', function () {
+  clickedInsideResults = true;
+});
+
+
+searchInput.addEventListener('focus', function () {
+  scrollablePage.classList.add('focused');
+  searchInput.classList.add('focused');
+  resultsContainer.style.display = 'block';
+  mainChildren.forEach(child => {
+    child.style.opacity = '0';
+    child.style.pointerEvents = 'none';
+    child.style.transition = "opacity 0.3s ease";
+  });
+});
+
+searchInput.addEventListener('blur', function () {
+  // Se non hai cliccato all'interno dei risultati e il container dei risultati è vuoto, allora lo nascondi
+  if (!clickedInsideResults && !resultsContainer.innerHTML.trim()) {
+    resultsContainer.style.display = 'none';
+  }
+  if (!clickedInsideResults) {
+    scrollablePage.classList.remove('focused');
+    searchInput.classList.remove('focused');
+    searchInput.value = '';
+    mainChildren.forEach(child => {
+      child.style.opacity = '1';
+      child.style.pointerEvents = 'all';
+      child.style.transition = "opacity 0.3s ease";
+    });
+    resultsContainer.innerHTML = '';
+  }
+  // Reimposta il flag per la prossima volta
+  clickedInsideResults = false;
+});
+
+function resetSearch() {
+  resultsContainer.innerHTML = '';
+  resultsContainer.style.display = 'none';
+  scrollablePage.classList.remove('focused');
+  searchInput.classList.remove('focused');
+  searchInput.value = '';
+  mainChildren.forEach(child => {
+    child.style.opacity = '1';
+    child.style.pointerEvents = 'all';
+  });
+}
+
+document.addEventListener('click', function(event) {
+  // Se non stai cliccando sul searchInput o sul resultsContainer, resetta tutto
+  if (!searchInput.contains(event.target) && !resultsContainer.contains(event.target)) {
+    resetSearch();
+  }
+});
+
+
+searchInput.addEventListener('keyup', function () {
+  const query = searchInput.value.trim();
+
+  if (query.length > 2) {
+    fetch(`/search?q=${query}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        // Pulisci i risultati precedenti
+        resultsContainer.innerHTML = '';
+        resultsContainer.style.opacity = '1';
+        resultsContainer.style.pointerEvents = 'all';
+
+        data.organizers.forEach(org => {
+          const orgLink = document.createElement('a');
+          orgLink.href = `/user/profile/${org.utente__username}`;
+
+          const orgDiv = document.createElement('div');
+          orgDiv.classList.add('result-item', 'organizzatore');
+          orgDiv.innerHTML = `
+              <img src="media/${org.img}" alt="${org.nome}">
+              <span>${org.nome}</span>
+              <img src="/static/circle-check-solid.svg" class="verified">
+          `;
+
+          orgLink.appendChild(orgDiv);
+          resultsContainer.appendChild(orgLink);
+        });
+
+        data.users.forEach(user => {
+          const userLink = document.createElement('a');
+          userLink.href = `/user/profile/${user.utente__username}`;
+
+          const userDiv = document.createElement('div');
+          userDiv.classList.add('result-item', 'utente');
+          userDiv.innerHTML = `
+              <img src="media/${user.img}" alt="${user.utente__username}">
+              <span>${user.utente__username}</span>
+          `;
+
+          userLink.appendChild(userDiv);
+          resultsContainer.appendChild(userLink);
+        });
+
+        data.events.forEach(event => {
+          const eventLink = document.createElement('a');
+          eventLink.href = `/eventi/${event.id}/`;
+
+          const eventDiv = document.createElement('div');
+          eventDiv.classList.add('result-item', 'evento');
+          eventDiv.innerHTML = `
+              <img src="${event.image}" alt="${event.name}">
+              <span>${event.name} at ${event.location} - ${event.data}</span>
+          `;
+
+          eventLink.appendChild(eventDiv);
+          resultsContainer.appendChild(eventLink);
+        });
+
+      })
+      .catch(error => console.error('Errore:', error));
+  } else {
+    resultsContainer.innerHTML = '';  // Pulisci i risultati se la query è troppo corta
+  }
+});
+
+

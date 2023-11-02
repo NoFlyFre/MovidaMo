@@ -43,24 +43,39 @@ a {
   width: 100%;
 }
 
+.cover_btn {
+  display: flex;
+  justify-content: center;
+  /* width: auto; */
+  top: 51px;
+  position: fixed;
+  width: -webkit-fill-available;
+}
+
+.change_cover_btn {
+  width: auto;
+  border: 2px solid var(--colore_secondario);
+}
+
 img {
   max-width: 100%;
   height: 100%;
   width: 100%;
   display: block;
   object-fit: cover;
+  border-radius: 0px 0px 20px 20px;
 }
 
 /* ! ========================== IMAGE PROFILE ================================== */
 
 .infos {
   position: relative;
-  margin-top: -130px;
+  margin-top: -160px;
   z-index: 1000;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: -70px;
 }
 
 .profile-image {
@@ -110,7 +125,7 @@ img {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 20px 0px;
+  margin: 20px 0px 40px 0px;
   justify-content: space-evenly;
 }
 
@@ -127,6 +142,24 @@ img {
 
 .int {
   margin: 0px 15px;
+}
+
+.friend_request {
+  position: relative;
+  top: -50px;
+}
+
+.friend_request button {
+  width: auto;
+  display: flex;
+  align-items: center;
+}
+
+.friend_request svg {
+  height: 30px;
+  width: 30px;
+  fill: var(--colore_secondario);
+  margin-right: 10px;
 }
 
 /* ! ========================== FOOTER ================================== */
@@ -180,7 +213,6 @@ img {
 
 /* ! ========================== FORM ================================== */
 
-
 form {
   width: 100%;
   display: flex;
@@ -225,18 +257,20 @@ form input:focus {
   color: var(--colore_primario);
 }
 
-
-form input:valid, form textarea:valid, form select:valid {
+form input:valid,
+form textarea:valid,
+form select:valid {
   border-color: var(--colore_primario);
   color: var(--colore_primario);
 }
 
-form input:valid::placeholder, form textarea:valid::placeholder, form select:valid::placeholder {
+form input:valid::placeholder,
+form textarea:valid::placeholder,
+form select:valid::placeholder {
   color: var(--colore_primario);
 }
 
 /* ! ========================== BUTTONS ================================== */
-
 
 button {
   font-family: "Oswald", sans-serif;
@@ -288,7 +322,6 @@ button {
   margin-bottom: 22px;
 }
 
-
 .action-buttons .button {
   position: relative;
   padding: 10px 20px;
@@ -305,7 +338,8 @@ button {
   width: 24px;
 }
 
-.logout, .add-event {
+.logout,
+.add-event {
   width: auto;
   height: 45px;
   padding: 5px 20px;
@@ -327,7 +361,8 @@ button {
   height: 24px;
   width: 24px;
   margin-left: 10px;
-  filter: invert(72%) sepia(100%) saturate(394%) hue-rotate(352deg) brightness(101%) contrast(98%);
+  filter: invert(72%) sepia(100%) saturate(394%) hue-rotate(352deg)
+    brightness(101%) contrast(98%);
 }
 
 .lower-btn {
@@ -365,7 +400,7 @@ button {
   bottom: 0;
   background-color: #fff;
   border: 1px solid #adb5bd;
-  transition: .4s;
+  transition: 0.4s;
   border-radius: 30px;
 }
 
@@ -378,7 +413,7 @@ button {
   left: 0.27em;
   bottom: 0.25em;
   background-color: #adb5bd;
-  transition: .4s;
+  transition: 0.4s;
 }
 
 input:checked + .slider {
@@ -400,6 +435,7 @@ input:checked + .slider:before {
   justify-content: flex-start;
   position: relative;
   align-items: baseline;
+  margin-top: 117px;
 }
 
 .show-option-auto img {
@@ -424,23 +460,23 @@ input:checked + .slider:before {
 }
 
 .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 200px;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    bottom: 152%;
-    left: -20px;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 0.3s;
-    z-index: 1001;
-    padding: 15px 15px;
-    background-color: rgba(30, 39, 92, 0.5);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(20px);
+  visibility: hidden;
+  width: 200px;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  bottom: 152%;
+  left: -20px;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 1001;
+  padding: 15px 15px;
+  background-color: rgba(30, 39, 92, 0.5);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
 }
 
 .tooltip .tooltiptext::after {
@@ -465,7 +501,7 @@ input:checked + .slider:before {
   display: flex;
   flex-direction: row;
   align-items: baseline;
-  margin-top: 20px;
+  margin-top: -100px;
   justify-content: flex-start;
 }
 

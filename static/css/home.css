@@ -92,6 +92,107 @@ a {
   margin-right: 10px;
 }
 
+/* ! ============================ SEARCH BAR ============================ */
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 12px 0px;
+  z-index: 999999;
+}
+
+#searchInput {
+  padding: 10px;
+  border: 1px solid #3e3f53;
+  border-radius: 10px;
+  width: -webkit-fill-available;
+  box-sizing: border-box;
+  margin: 0px 15px;
+  height: 39.5px;
+  background-color: #ffffff42;
+  caret-color: white;
+  color: white;
+  transition: border-color 0.3s ease-in-out;
+  z-index: 999999;
+}
+
+#searchInput::placeholder {
+  color: #ffffff;
+  opacity: 0.5;
+}
+
+#searchInput:focus {
+  border-color: #facb22;
+  outline: none;
+}
+
+/* ! ============================ SEARCH RESULT ============================ */
+
+.scrollable_page.focused {
+  background: var(--colore_secondario);
+  overflow: hidden;
+}
+
+#searchInput.focused {
+  position: relative;
+}
+
+/* Stile generale per ogni risultato */
+.result-item {
+  padding: 5px 15px;
+  margin: 10px 0;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  font-weight: 100;
+}
+
+.result-item .verified {
+  height: 15px;
+  width: 15px;
+  margin-left: 10px;
+  filter: invert(72%) sepia(100%) saturate(394%) hue-rotate(352deg) brightness(101%) contrast(98%);
+  border: none;
+  margin-top: 3px;
+}
+
+.result-item a {
+  display: flex;
+  align-items: center;
+}
+
+.result-item img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  border: 1px solid white;
+}
+
+/* Stile per gli utenti */
+
+.organizzatore img, .utente img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+/* Stile per gli utenti normali */
+.utente img {
+  border: 1px solid white;
+}
+
+/* Stile per gli utenti organizzatori */
+.organizzatore img {
+  border: 1px solid var(--colore_primario);
+}
+
+.evento img {
+  border-radius: 10px;
+}
+
+
 /* ! ============================ CARD PRINCIPALI ============================ */
 
 .events_hor_scroller {
@@ -263,10 +364,10 @@ img {
   top: 30px;
   border-radius: 8px;
   color: var(--colore_secondario);
-  box-shadow: 0px 0px 2.2px rgba(0, 0, 0, 0.127),
+  /* box-shadow: 0px 0px 2.2px rgba(0, 0, 0, 0.127),
     0px 0px 5.3px rgba(0, 0, 0, 0.182), 0px 0px 10px rgba(0, 0, 0, 0.225),
     0px 0px 17.9px rgba(0, 0, 0, 0.268), 0px 0px 33.4px rgba(0, 0, 0, 0.323),
-    0px 0px 80px rgba(0, 0, 0, 0.45);
+    0px 0px 80px rgba(0, 0, 0, 0.45); */
   padding: 0px 3px 3px 3px;
   justify-content: space-evenly;
 }

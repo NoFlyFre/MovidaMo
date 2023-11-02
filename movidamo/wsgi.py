@@ -8,6 +8,11 @@ https://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/
 """
 
 import os
+'''
+import locale
+
+locale.setlocale(locale.LC_TIME, 'it_IT.utf8')
+'''
 
 from django.core.wsgi import get_wsgi_application
 

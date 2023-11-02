@@ -1,0 +1,56 @@
+{% extends "template.html" %}
+{% load static %}
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block css_link %}
+<link rel="stylesheet" type="text/css" href="{% static '/utenti/css/notifications.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static '/css/home.css' %}" />
+{% endblock %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<main>
+  <div class="title">
+    <h1>Notifiche</h1>
+  </div>
+  <div class="notifications-list">
+    {% if notifiche.count == 0 %}
+      <div id="no-notifications">Nessuna nuova notifica.</div>
+    {% endif %}
+    {% for notifica in notifiche %}
+      <div class="notification">
+        <div class="notification-main">
+          <div class="notification-image">
+            <img src="{{ notifica.mittente.utente_base.img.url }}" alt="Foto profilo">
+          </div>
+          <div class="notification-title">
+            {% if notifica.tipo == "RA" %}
+              <h2>Nuova amicizia</h2>
+              <div class="notification-date">
+                <p>@{{ notifica.mittente.username }}</p>
+              </div>
+            {% elif notifica.tipo == "AE" %}
+              <h2>Aggiornamento Evento</h2>
+              <div class="notification-date">
+                <p>{{ notifica.testo }}</p>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+        {% if notifica.tipo == "RA" %}
+        <div class="notification-actions" data-notification-id="{{ notifica.id }}">
+            <button class="notification-action accept">Accetta</button>
+            <button class="notification-action refuse">Rifiuta</button>
+        </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+  <script src="{% static '/utenti/js/notifications.js' %}"></script>
+</main>
+{% endblock %}
