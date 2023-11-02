@@ -46,7 +46,15 @@ INSTALLED_APPS = [
     'mathfilters',
     'raccomandazioni',
     'django_extensions',
-]
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    ]
+
+SITE_ID = 1
+SOCIALACCOUNT_LOGIN_ON_GET = True
 '''
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dbmih3try',
@@ -63,6 +71,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'movidamo.urls'
@@ -148,6 +157,12 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+
 # Media settings
 #DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
 MEDIA_URL = '/media/'
@@ -156,3 +171,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # CSRF Security
 CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = ['https://movidamo.azurewebsites.net']
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+    }
+}
+
+

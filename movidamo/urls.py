@@ -13,4 +13,5 @@ urlpatterns = [
     path('user/', include('utenti.urls')),
     path('map/', include('mappa.urls')),
     path('search/', search, name='search'),
+    path('accounts/', include('allauth.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
