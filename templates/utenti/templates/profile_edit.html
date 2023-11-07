@@ -13,7 +13,13 @@
 {% endblock %} {% block script %}{% endblock %} {% block content %}
 <main>
     <div class="cover">
-        <img src="{% static '/cover.jpg' %}" alt="cover" id="edit_cover_img"/>
+        {% if user.role == 'utente_base' %}
+            {% if user.utente_base.cover_img.url %}
+            <img src="{{ user.utente_base.cover_img.url }}" alt="cover" id="edit_cover_img"/>
+            {% else %}
+            <img src="{% static '/cover.jpg' %}" alt="cover" id="edit_cover_img"/>
+            {% endif %}
+        {% endif %}
         <div class="cover_btn">
             <button type="button" class="change_cover_btn">Cambia Copertina</button>
         </div>

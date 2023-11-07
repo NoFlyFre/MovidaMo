@@ -1,4 +1,4 @@
-{% extends "template.html" %} {% load static %} {% load socialaccount %} {% block title%} {{title}}
+{% extends "template.html" %} {% load static %} {% load socialaccount %} {% providers_media_js %} {% block title%} {{title}}
 {%endblock %} {% block css_link %}
 <link
   rel="stylesheet"
@@ -121,6 +121,7 @@
               />
             </svg>
           </a>
+          {% comment %}
           <svg
             width="41"
             height="47"
@@ -172,6 +173,7 @@
               </filter>
             </defs>
           </svg>
+          <a href="{% provider_login_url 'facebook' %}">
           <svg
             width="47"
             height="47"
@@ -224,6 +226,8 @@
               </filter>
             </defs>
           </svg>
+          </a>
+        {% endcomment %}
         </div>
         <p>Non hai un account? <a href="/user/signup">Registrati</a></p>
       </div>
