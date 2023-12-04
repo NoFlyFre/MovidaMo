@@ -26,7 +26,6 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    // ... Il resto del tuo codice JS ...
 
     // Quando l'elemento per cambiare la copertina viene cliccato
     $('.change_cover_btn').on('click', function() {

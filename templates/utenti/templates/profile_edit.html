@@ -20,6 +20,13 @@
             <img src="{% static '/cover.jpg' %}" alt="cover" id="edit_cover_img"/>
             {% endif %}
         {% endif %}
+        {% if user.role == 'organizzatore' %}
+            {% if user.utente_organizzatore.cover_img.url %}
+                <img src="{{ user.utente_organizzatore.cover_img.url }}" alt="cover" id="edit_cover_img"/>
+            {% else %}
+                <img src="{% static '/cover.jpg' %}" alt="cover" id="edit_cover_img"/>
+            {% endif %}
+        {% endif %}
         <div class="cover_btn">
             <button type="button" class="change_cover_btn">Cambia Copertina</button>
         </div>
@@ -55,6 +62,7 @@
             <form autocomplete="off" method="POST" enctype="multipart/form-data" action="{% url 'edit_profile_organizer' username=user.username %}">
                 {% csrf_token %}
                 {{ form.profile_picture }}
+                {{ form.cover_picture }}
                 <button type="submit">Conferma</button>
             </form>
             {% endif %}

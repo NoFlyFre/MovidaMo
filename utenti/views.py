@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.utils import timezone
+from payment.models import Ticket
+from payment.views import create_stripe_account
 from utenti.forms import OrganizzatoreProfileEditForm, OrganizzatoreSignUpForm, UserProfileEditForm, UtenteSignUpForm, UtenteLoginForm
 from utenti.models import Utente
 from utenti.models import UtenteBase
@@ -10,9 +12,11 @@ from django.contrib.auth import login, logout
 from django.contrib import messages
 from movidamo.views import *
 from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
 from .models import Notifica
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 
@@ -21,6 +25,7 @@ def register_request(request):
         form = UtenteSignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, user)
             messages.success(request, "Registration successful.")
             return redirect(edit_profile, username=request.user.username)
@@ -35,9 +40,11 @@ def register_request_organizer(request):
         form = OrganizzatoreSignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, user)
             messages.success(request, "Registration successful.")
-            return redirect(edit_profile_organizer, username=request.user.username)
+            redirect_url = create_stripe_account(request)
+            return HttpResponseRedirect(redirect_url)
         
     else:
         form = OrganizzatoreSignUpForm()
@@ -163,22 +170,28 @@ def edit_profile(request, username):
 @login_required
 def edit_profile_organizer(request, username):
     utente = Utente.objects.get(username=username)
-    utente.role = "organizzatore"
     form = OrganizzatoreProfileEditForm(instance=utente.utente_organizzatore)
     if request.method == 'POST':
         form = OrganizzatoreProfileEditForm(
-            request.POST, request.FILES, instance=request.user.utente_organizzatore)
+            request.POST, request.FILES, instance=utente.utente_organizzatore)
         if form.is_valid():
             if form.cleaned_data['profile_picture'] != None:
                 utente.utente_organizzatore.img = form.cleaned_data['profile_picture']
-                utente.utente_organizzatore.save()
+            
+            # Aggiornamento dell'immagine della copertina
+            if form.cleaned_data.get('cover_picture'):  # Controlla se c'è una nuova immagine di copertina
+                utente.utente_organizzatore.cover_img = form.cleaned_data['cover_picture']
+
+            utente.utente_organizzatore.save()
             utente.save()
-            return redirect('profile_page', username=request.user.username)
+            return redirect('profile_page', username=utente.username)
     else:
         if request.user.username == username:
             return render(request, "utenti/templates/profile_edit.html", {"user": utente, "form": form})
         else:
             return redirect('pagina_non_autorizzata')
+
+    return render(request, 'profile_edit.html', {'form': form})
 
     
 
@@ -207,9 +220,6 @@ def notifications(request):
         return render(request, 'utenti/templates/notifications.html', {'notifiche': notifiche})
     else:
         return redirect('pagina_non_autorizzata')
-    
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def accetta_richiesta_amicizia(request):
@@ -293,3 +303,15 @@ def check_friend_request_status(request, destinatario_username):
     # Se la notifica esiste ma gli utenti non sono ancora amici
     else:
         return 1
+    
+    
+def tickets_page(request):
+    if request.user.is_authenticated:
+        tickets = Ticket.objects.filter(user=request.user)
+        context = {
+            'tickets': tickets
+        }
+
+        return render(request, 'utenti/templates/tickets.html', context)
+    else:
+        return redirect('pagina_non_autorizzata')

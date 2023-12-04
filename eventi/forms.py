@@ -3,6 +3,9 @@ from .models import Evento, Categoria
 
 
 class AddEventForm(forms.ModelForm):
+    
+    enable_sell = forms.BooleanField(required=False, initial=True)
+
     class Meta:
         model = Evento
         fields = [

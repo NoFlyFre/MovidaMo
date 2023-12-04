@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+from base64 import encode
 import os
 from pathlib import Path
 
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
+    'payment',
 ]
 
 SITE_ID = 1
@@ -211,3 +213,18 @@ SOCIALACCOUNT_PROVIDERS = {
 
 LOGIN_REDIRECT_URL = '/'
 SOCIALACCOUNT_ADAPTER = 'utenti.adapters.CustomUserSocialAccountAdapter'
+
+STRIPE_TEST_PUBLIC_KEY= 'pk_test_51NxsW6Li8gs7fV7NjltMFSpOF4kuPfL8SNyl2UhGqXHshHTNwRztbDAVSEkC2Tm3dRHs58EqbEqNbPMvDc7wP0lz00WXh4W26b'
+STRIPE_TEST_SECRET_KEY = 'sk_test_51NxsW6Li8gs7fV7Nhb1o1jC1HRENlyEdJTrzI33BaG1ekuh3Dsfk1CkphWFGIXulsbResKMR0Y4N9XQALoTpaUHf00h4Bo8AJ8'
+STRIPE_SECRET_KEY = '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'
+STRIPE_LINKED_ACCOUNTS_WEBHOOK_KEY = 'whsec_f84438ef11bb47df753262ae29c1fa68db4c666bab59dcc31f4e4d022fbe31ea'
+
+TOKEN_SECRET_KEY = '_=l!!z(%1(-ohhc!$hh))avx1e+=^85&-x=v&-uqbxl47+x^*b'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'fracali99@gmail.com'
+EMAIL_HOST_PASSWORD = 'frfk yyux kuzd shqo'
+DEFAULT_FROM_EMAIL = 'fracali99@gmail.com'

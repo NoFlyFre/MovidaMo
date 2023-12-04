@@ -1,0 +1,67 @@
+.toggle-field {
+    align-items: center;
+    margin: 15px 0px;
+    width: 240px;
+    min-width: 80%;
+}
+
+.link-field {
+    margin-top: 0px;
+}
+
+.tickets-label {
+    margin-right: 10px;
+}
+
+input:checked + .slider {
+    background-color: var(--colore_primario);
+    border: 1px solid var(--colore_primario);
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px var(--colore_primario);
+  }
+
+  .custum-file-upload {
+    height: 200px;
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    gap: 20px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #cacaca;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0px 48px 35px -48px rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.2);
+    margin-top: 10px;
+}
+  
+  .custum-file-upload .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .custum-file-upload .icon svg {
+    height: 80px;
+    fill: rgba(255, 255, 255, 0.2);
+}
+  
+  .custum-file-upload .text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .custum-file-upload .text span {
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.2);
+}
+  
+  .custum-file-upload input {
+    display: none;
+  }

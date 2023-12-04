@@ -33,6 +33,9 @@ class Evento(models.Model):
         upload_to='eventi/immagini', null=True, blank=True)
     tickets_link = models.URLField(null=True, blank=True)
     info_phone_number = models.CharField(max_length=20, null=True, blank=True)
+    stripe_product_id = models.CharField(max_length=20, null=True, blank=True)
+    stripe_price_id = models.CharField(max_length=30, null=True, blank=True)
+    
 
     class Meta:
         verbose_name_plural = "Eventi"

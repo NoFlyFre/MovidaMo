@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dettagli Biglietto</title>
+</head>
+<body>
+    <h1>Dettagli del Tuo Biglietto per l'Evento</h1>
+    <p>Ciao {{ user.username }},</p>
+    <p>Ecco i dettagli del tuo biglietto per l'evento {{ event.name }}:</p>
+    <ul>
+        <li>Data: {{ event.data }}</li>
+        <li>Ora: {{ event.time }}</li>
+        <li>Luogo: {{ event.location }}</li>
+    </ul>
+    <image src="{{ ticket.qr_code.url}}">
+    <p>Grazie per aver scelto il nostro servizio!</p>
+</body>
+</html>

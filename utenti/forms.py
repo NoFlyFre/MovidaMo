@@ -51,21 +51,22 @@ class OrganizzatoreSignUpForm(UserCreationForm):
         user.email = self.cleaned_data.get('email')
         user.role = Utente.Role.ORGANIZZATORE
         if commit:
-            print("salvataggio")
-            
             user.save()
         utente = Organizzatore.objects.create(utente=user)
         utente.img = "../static/default_profile.png"
         utente.nome = self.cleaned_data.get('name')
         utente.save()
+        print("ultimo salvataggio")
         return user
     
 class OrganizzatoreProfileEditForm(UserChangeForm):
     profile_picture = forms.ImageField(label='Immagine del profilo', required=False)
+    cover_picture = forms.ImageField(label="Immagine di copertina", required=False)
+
 
     class Meta:
         model = Organizzatore
-        fields = ('profile_picture',)
+        fields = ('profile_picture','cover_picture')
     
 
     

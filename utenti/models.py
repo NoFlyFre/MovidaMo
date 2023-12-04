@@ -12,9 +12,10 @@ class Utente(AbstractUser):
     role = models.CharField('Role', max_length=50, choices=Role.choices)
 
     def save(self, *args, **kwargs):
-        if not self.pk:
+        if not self.pk and not self.role:
             self.role = self.base_role
         return super().save(*args, **kwargs)
+
 
     def __str__(self):
         return self.role + " - " + self.username
@@ -29,9 +30,11 @@ class Organizzatore(models.Model):
     nome = models.CharField(max_length=255)
     img = models.ImageField(upload_to='organizzatori/')
     cover_img = models.ImageField(upload_to='organizzatori/', blank=True)
-    eventi = models.ManyToManyField('eventi.Evento')
+    eventi = models.ManyToManyField('eventi.Evento', blank=True)
 
     base_role = Utente.Role.ORGANIZZATORE
+    
+    stripe_account_id = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
         return self.utente.username

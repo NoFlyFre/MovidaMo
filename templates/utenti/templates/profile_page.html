@@ -16,10 +16,18 @@
 {% block content %}
 <main>
   <div class="cover">
-    {% if profile_user.utente_base.cover_img %}
-    <img src="{{ profile_user.utente_base.cover_img.url }}" alt="cover" />
+    {% if profile_user.role == 'utente_base' %}
+      {% if profile_user.utente_base.cover_img.url %}
+        <img src="{{ profile_user.utente_base.cover_img.url }}" alt="cover" id="edit_cover_img"/>
+      {% else %}
+        <img src="{% static '/cover.jpg' %}" alt="cover" id="edit_cover_img"/>
+      {% endif %}
     {% else %}
-    <img src={% static "cover.jpg" %}></img>
+      {% if user.utente_organizzatore.cover_img.url %}
+          <img src="{{ user.utente_organizzatore.cover_img.url }}" alt="cover" id="edit_cover_img"/>
+      {% else %}
+          <img src="{% static '/cover.jpg' %}" alt="cover" id="edit_cover_img"/>
+      {% endif %}
     {% endif %}
   </div>
 

@@ -1,0 +1,68 @@
+{% extends "template.html" %}
+{% load static %}
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block css_link %}
+<link rel="stylesheet" type="text/css" href="{% static '/utenti/css/notifications.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static '/utenti/css/ticket_purchase.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static '/css/home.css' %}" />
+{% endblock %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<main>
+  <div class="title">
+    <h1>Ecco il tuo biglietto!🎉🎟️</h1>
+    <div class="message-info">
+        Abbiamo inviato una copia digitale del tuo biglietto alla tua email.
+        Assicurati di controllarla per tutti i dettagli.
+        E non dimenticare: puoi sempre visualizzare e gestire tutti i tuoi biglietti nella sezione 'biglietti' dell'app.
+        Grazie per aver scelto Movida. Non vediamo l'ora di vederti!
+    </div>
+  </div>
+  <div class="ticket-space">
+    <div class="ticket">
+        <img class="blurred-img" src="{{event_img}}">
+        <div class="opacity"></div>
+        <div class="ticket-title">
+            {{ name }}
+            <img class="organizer-img-icon" src="{{icon_img}}">
+        </div>
+        <div class="ticket-infos">
+            <div class="single-info place-info">
+                {{organizzatore}}
+                <div class="sub-info">
+                    Locale
+                </div>
+            </div>
+            <div class="single-info price-info">
+                {{prezzo}} €
+                <div class="sub-info">
+                    Prezzo
+                </div>
+            </div>
+            <div class="single-info date-info">
+                {{data|date:"d/m/Y"}}
+                <div class="sub-info">
+                    Data
+                </div>
+            </div>
+            <div class="single-info time-info">
+                {{time}}
+                <div class="sub-info">
+                    Ora
+                </div>
+            </div>
+        </div>
+        <div class="ticket-qr">
+            <img src="{{ qr_code }}">
+        </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

@@ -18,4 +18,5 @@ urlpatterns = [
     path('unread_count/', get_unread_notifications_count, name="unread_notifications_count"),
     path('mark_notifications_as_read/', mark_notifications_ad_read, name="mark_notifications_as_read"),
     path('send_friend_request/<str:username>/', send_friend_request, name='send_friend_request'),
+    path('tickets/', tickets_page, name='tickets_page'),
 ]

@@ -1,0 +1,57 @@
+{% extends "template.html" %} {% load static %} {% block title %} {{ title }} {%endblock %} {% block css_link %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static '/utenti/css/notifications.css' %}"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static '/utenti/css/ticket_purchase.css' %}"
+/>
+<link rel="stylesheet" type="text/css" href="{% static '/css/home.css' %}" />
+{% endblock %} {% block script %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %} {% block content %}
+<main>
+  <div class="title">
+    <h1>I tuoi biglietti</h1>
+  </div>
+  {% for ticket in tickets %}
+  <div class="ticket-space" style="margin-top:0px;margin-bottom:35px">
+    <div class="ticket">
+      <img class="blurred-img" src="{{ ticket.event.image.url }}" />
+      <div class="opacity"></div>
+      <div class="ticket-title">
+        {{ ticket.event.name }}
+        <img class="organizer-img-icon" src="{{ ticket.event.get_organizzatore.img.url }}" />
+      </div>
+      <div class="ticket-infos">
+        <div class="single-info place-info">
+          {{ ticket.event.get_organizzatore.nome }}
+          <div class="sub-info">Locale</div>
+        </div>
+        <div class="single-info price-info">
+          {{ ticket.event.price }} €
+          <div class="sub-info">Prezzo</div>
+        </div>
+        <div class="single-info date-info">
+          {{ ticket.event.data|date:"d/m/Y" }}
+          <div class="sub-info">Data</div>
+        </div>
+        <div class="single-info time-info">
+          {{ ticket.event.time }}
+          <div class="sub-info">Ora</div>
+        </div>
+      </div>
+      <div class="ticket-qr" onclick="zoomQRCode('{{ ticket.id }}')">
+        <!-- Assicurati che il percorso del QR code sia corretto -->
+        <img src="{{ ticket.qr_code.url }}" id="qr-{{ ticket.id }}" class="qr-code-img" />
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  <div id="qr-overlay" onclick="closeZoomQRCode()"></div>
+  <script src="{% static 'utenti/js/tickets.js' %}"></script>
+  </main>
+{% endblock %}
