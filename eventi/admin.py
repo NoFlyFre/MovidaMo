@@ -5,12 +5,12 @@ from django.contrib import admin
 from .models import Evento, Categoria  # Assicurati di importare i tuoi modelli
 
 def set_events_to_today(modeladmin, request, queryset):
-    queryset.update(data=timezone.now().date())
+    queryset.update(data=timezone.localdate())
 
 def set_events_to_future(modeladmin, request, queryset):
     for event in queryset:
         random_days = random.randint(1, 14)  # Genera un numero casuale tra 1 e 14
-        future_date = timezone.now().date() + timedelta(days=random_days)
+        future_date = timezone.localdate() + timedelta(days=random_days)
         event.data = future_date
         event.save()  # Non dimenticare di salvare l'evento dopo aver modificato la data
 

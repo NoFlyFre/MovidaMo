@@ -15,6 +15,11 @@ pydot = "*"
 whitenoise = "*"
 cloudinary = "*"
 django-cloudinary-storage = "*"
+django-sslserver = "*"
+django-allauth = "*"
+stripe = "*"
+qrcode = "*"
+pillow = "*"
 
 [dev-packages]
 
