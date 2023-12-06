@@ -25,7 +25,6 @@ class Evento(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     special_guest = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    # Campo per memorizzare le parole chiave separate da virgola
     tags = models.CharField(max_length=200, null=True, blank=True)
     mappa_lat = models.FloatField(blank=True, null=True)
     mappa_long = models.FloatField(blank=True, null=True)

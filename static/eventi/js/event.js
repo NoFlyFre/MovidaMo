@@ -161,4 +161,18 @@ function getCookie(name) {
     return cookieValue;
 }
 
+$(document).ready(function() {
+    $('.booking').click(function() {
+        $('.ticket-purchase-container').toggleClass('show-purchase-section');
+        $('.overlay-unclickable').toggleClass('active'); // Attiva/disattiva l'overlay
+    });
+
+    // Chiudi la sezione di acquisto quando si clicca sull'overlay
+    $('.overlay-unclickable').click(function() {
+        $('.ticket-purchase-container').removeClass('show-purchase-section');
+        $(this).removeClass('active');
+    });
+});
+
+
 

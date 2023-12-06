@@ -16,6 +16,7 @@
   >
   </div>
   <div class="blur_overlay">
+    <div class="overlay-unclickable"></div>
     <div class="ticket-purchase-container">
       <h2>Acquista Biglietti</h2>
       <div class="ticket-option">
@@ -268,8 +269,12 @@
               <img src="{% static 'ticket-solid.svg' %}" alt="Book" />
             </a>
           </div>
-            {% endif %} 
-            {% if evento.info_phone_number %}
+          {% elif evento.stripe_price_id %}
+          <div class="button booking">
+              <img src="{% static 'ticket-solid.svg' %}" alt="Book" />
+          </div>
+          {% endif %}
+          {% if evento.info_phone_number %}
           <div class="button call">
             <a href="tel:{{evento.info_phone_number}}">
               <img src="{% static 'phone-solid.svg' %}" alt="Call" />
