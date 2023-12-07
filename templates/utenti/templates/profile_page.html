@@ -71,9 +71,8 @@
           <p>{{ friends_number }}</p>
         </div>
       </div>
-      
-
-      {% if user.is_authenticated and user == profile_user %}
+      {% if user.is_authenticated %}
+      {%if user == profile_user %}
         {% if profile_user.role == 'organizzatore' %}
           <div class="buttons action-buttons org-btns">
             <a href="{% url 'edit_profile_organizer' username=user.username %}">
@@ -103,6 +102,13 @@
               </a>
             </div>
           </div>
+        {% endif %}
+        {% else %}
+        <div class="buttons action-buttons org-btns">
+          <a href="/chat/start/{{profile_user.pk}}/">
+            <button type="button">Messaggio</button>
+          </a>
+        </div>
         {% endif %}
       {% endif %}
     </div>

@@ -20,6 +20,9 @@ django-allauth = "*"
 stripe = "*"
 qrcode = "*"
 pillow = "*"
+channels = "*"
+channels-redis = "*"
+daphne = "*"
 
 [dev-packages]
 

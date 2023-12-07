@@ -1,0 +1,47 @@
+{% extends "template.html" %} {% load static %} {% block title %} {{ title }}
+{%endblock %} {% block css_link %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static '/utenti/css/notifications.css' %}"
+/>
+<link rel="stylesheet" type="text/css" href="{% static '/css/home.css' %}" />
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static '/chat/css/chatlist.css' %}"
+/>
+{% endblock %} {% block script %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %} {% block content %}
+<div class="overlay"></div>
+<main>
+  <div class="title">
+    <h1>Messaggi</h1>
+  </div>
+  <div class="chat-list">
+    {% for chat in chat_details %}
+    <a href = "/chat/{{chat.room_id}}">
+      <div class="chat-single">
+        <div class="chat-image">
+          <img src="{{ chat.other_user_image }}" alt="Foto profilo" />
+        </div>
+        <div class="right-col">
+          <div class="chat-title">
+            <h2>{{ chat.other_name }}</h2>
+          </div>
+          <div class="chat-text">
+              <div class="message-container">
+                  <p>{{ chat.last_message }}</p>
+              </div>
+              <div class="chat-date">
+                  <p>{{ chat.time_diff }}</p>
+              </div>
+          </div>        
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</main>
+{% endblock %}

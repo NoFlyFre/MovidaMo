@@ -1,0 +1,170 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500&display=swap");
+
+body {
+  font-family: "Oswald", sans-serif;
+  color: #fff;
+}
+
+:root {
+  --colore_primario: #fccd22;
+  --colore_secondario: #1e275c;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.scrollable {
+  margin-bottom: 80px;
+}
+
+.scrollable_page {
+  background-image: url(../../bg_chat.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  margin-top: 24%;
+  margin-bottom: 19%;
+  overflow-y: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.header {
+  height: 11%;
+  width: 100%;
+  background: var(--colore_secondario);
+  z-index: 2;
+  display: flex;
+  color: white;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+}
+
+.composer {
+  height: 9%;
+  width: 100%;
+  background: var(--colore_secondario);
+  z-index: 2;
+  position: fixed;
+  bottom: 0;
+}
+
+.icon img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--colore_primario);
+}
+
+.send {
+  margin-left: 20px;
+  background: var(--colore_primario);
+  padding: 13px;
+  border: none;
+  border-radius: 50%;
+}
+
+.text-input {
+  position: relative;
+  height: 59%;
+  width: 70%;
+  border: 2px solid #ffffffb0;
+  background: #ffffff24;
+  border-radius: 33px;
+  padding: 20px;
+  caret-color: white;
+  color: #fff;
+  font-size: medium;
+}
+
+.text-input::placeholder {
+  color: #ffffffb0; /* Sostituisci con il colore desiderato */
+  opacity: 1; /* Opzionale: Safari riduce l'opacità di default */
+}
+
+.text-input:focus {
+  outline: none; /* Rimuove l'outline di default */
+}
+
+.composer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.send svg {
+  fill: var(--colore_secondario);
+}
+
+.name {
+  font-weight: 400;
+}
+
+.back svg {
+  height: 30px;
+  width: auto;
+  fill: white;
+}
+
+.msg-text {
+    background: #0c1027;
+    margin: 12px;
+    padding: 12px 15px;
+    border-radius: 30px 30px 30px 0px;
+    font-weight: 300;
+    font-family: system-ui;
+    font-size: 15px;
+    overflow-wrap: break-word; /* Va a capo all'occorrenza senza tagliare le parole */
+    white-space: normal; /* Il testo può andare a capo su più righe */
+    max-width: 80%; /* Imposta una larghezza massima per evitare che il testo esca fuori */
+}
+
+.msg-sender {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.msg-sender .msg-text {
+    border-radius: 30px 30px 0px 30px;
+    background: #1a2254;
+    margin-right: 0;
+}
+
+.msg {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.msg-info-icon {
+    height: 45px;
+}
+
+.msg-info-icon img {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    border: 2px solid var(--colore_primario);
+}
+
+.msg-container {
+    display: flex;
+    margin: 10px 20px;
+    flex-direction: column;
+}

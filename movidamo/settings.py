@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
     'payment',
+    'chat',
+    'channels',
 ]
 
 SITE_ID = 1
@@ -96,6 +98,14 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'movidamo.wsgi.application'
+ASGI_APPLICATION = 'movidamo.routing.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
+
 
 
 # Database
