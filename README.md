@@ -48,4 +48,4 @@ Data la natura a lungo termine del progetto, sono previste alcune funzionalità 
 Il progetto MovidaMO è stato realizzato da Francesco Caligiuri come progetto personale.
 
 ## Contribuzione
-Attualmente non sono previste linee guida specifiche per la contribuzione al progetto MovidaMO. Tuttavia, se sei interessato a contribuire, puoi contattarmi all'indirizzo fracali99@gmail.com per discutere eventuali possibili collaborazioni.
+Attualmente non sono previste linee guida specifiche per la contribuzione al progetto MovidaMO. Tuttavia, se sei interessato a contribuire, puoi contattarmi all'indirizzo fracali99@gmail.com per discutere eventuali possibili collaborazioni.# Prototipo
